@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html
+    PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="zh-Hans" lang="zh-Hans">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+		<link rel="stylesheet" type="text/css" href="mystyle.css" />
+        <title>随机考试系统</title>
+    </head>
+    <body>
+	<?php
+	if(!isset($_SESSION['username'])){
+	session_start();  }
+	
+	echo '<p align="right">欢迎你，'.$_SESSION['username'].'。如果不是本人，请<a href = "signout.php">重新登录</a></p><br/>';
+	?>
+        <h1 align="center">随机考试系统</h1>
+		
+       <form name="t" method="post" action = "score.php">
+	   <div class="teststyle">
+        <?php
+	//	echo '<p>欢迎你，'.$_SESSION['username'].'。如果不是本人，请<a href = "signout.php">重新登录</a><br/>';
+	    
+            if (!empty($db['test'])) {
+//			  print_r($db['test']) ;	
+				$counter = 0;
+                foreach ($db['test'] as $value) {
+                    $counter += 1;
+                    echo $counter . '、' . $value['question'] . '<br>';
+
+					$str = '
+                    <input type="radio" name="t'.$counter.'" value="A"/>A '.$value["choiceA"].'  &nbsp
+					<input type="radio" name="t'.$counter.'" value="B"/>B '. $value["choiceB"].'<br />
+					<input type="radio" name="t'.$counter.'" value="C"/>C '. $value["choiceC"].' &nbsp
+					<input type="radio" name="t'.$counter.'" value="D"/>D '. $value["choiceD"].' <br /><br />
+					';
+					echo $str;
+					echo '<input type="hidden" name="ans'.$counter.'" value="'.$value['answer'].'" />';
+					}
+					echo '<input type="hidden" name="counter" value="'.$counter.'" />';
+					
+					$keys = $random_keys;				
+				//	$arr_to_string = json_encode($db['test']);
+					$arr_to_string = serialize($keys);
+					echo '<input type="hidden" name="array" value="'.$arr_to_string.'" />';
+				//	echo $arr_to_string;
+					
+					}	
+					
+?>					
+		<br /><p align="center">
+		<input type = "submit" value = "提交">&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+		<input type = "reset" value = "重置">  </p>          
+        </div>
+		</form>
+    </body>
+</html>
