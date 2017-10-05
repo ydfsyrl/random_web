@@ -1,1 +1,2 @@
 use git gui
+smg
