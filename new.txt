@@ -1,5 +1,1 @@
-<<<<<<< HEAD
-change it fuck
-=======
-begin
->>>>>>> parent of 3edae76... change txt
+use git gui
